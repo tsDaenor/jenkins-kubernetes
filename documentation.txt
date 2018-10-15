@@ -1,0 +1,64 @@
+install virtualbox and minikube to run kubernetes locally
+$ brew cask install virtualbox
+$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.29.0/minikube-darwin-amd64 && chmod +x minikube && sudo cp minikube /usr/local/bin/ && rm minikube
+$ minikube version
+
+
+install command line tool to instruct kubernetes
+$ brew install kubectl
+$ kubectl version
+
+
+start minikube and check environment
+$ minikube start — vm-driver=virtualbox
+$ kubectl kversion
+$ kubectl get nodes
+$ minikube dashboard
+$ minikube ssh
+$ exit
+
+
+install helm (package manager for kubernetes)
+$ brew install kubernetes-helm
+
+
+check namespaces
+$ kubectl get ns
+
+
+create directory structure and jenkins namespace (via yaml files)
+$ mkdir -p minikube-helm-jenkins/minikube
+$ mkdir -p minikube-helm-jenkins/helm
+$ cd minikube-helm-jenkins
+$ vi minikube/jenkins-namespace.yaml 					# see yaml file for content
+$ kubectl create -f minikube/jenkins-namespace.yaml
+$ kubectl get ns
+
+
+install / deploy jenkins (using Helm)
+$ helm init												# --upgrade ?
+$ vi helm/jenkins-values.yaml							# see yaml file for content
+$ vi helm/jenkins-casc-config.yaml						# see yaml file for content
+$ kubectl create -f helm/jenkins-casc-config.yaml
+$ helm install --name jenkins -f helm/jenkins-values.yaml stable/jenkins --namespace jenkins-project
+	# make sure to edit the "AdminPassword" field
+	# in this file, define plugins to be pre-installed: including kubernetes, greenballs, git, configuration-as-code plugin
+$ helm ls
+
+
+deploy changes in configuration
+$ kubectl apply -f helm/jenkins-casc-config.yaml
+$ helm upgrade -f helm/jenkins-values.yaml jenkins stable/jenkins
+$ helm delete jenkins
+$ helm del --purge jenkins
+
+
+check services
+$ minikube service list
+$ minikube service jenkins --namespace jenkins-project
+# kubectl --namespace=jenkins-project exec -it jenkins-69b56d945b-bz7vd -- bash			# check minikube dashboard to get the name of the jenkins pod
+
+
+stop (and delete!) minikube
+$ minikube stop
+$ minikube delete
