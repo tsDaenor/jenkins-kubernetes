@@ -6,23 +6,22 @@ metadata:
 data:
   jenkins.yaml: |
     jenkins:
-      clouds:
-      - kubernetes:
-          containerCapStr: "10"
-          jenkinsUrl: "http://192.168.99.100:32000"
-          name: "kubernetes"
-          namespace: "jenkins-project"
-          templates:
-          - containers:
-            - args: "${computer.jnlpmac} ${computer.name}"
-              envVars:
-              - envVar:
-                  key: "JENKINS_URL"
-                  value: "http://192.168.99.100:32000"
-              image: "jenkins/jnlp-slave:3.10-1"
-            label: "jenkins-slave"
-            name: "default"
-            nodeUsageMode: "NORMAL"
+      systemMessage: "added job from casc"
+    jobs:
+      - script: >
+          pipelineJob('Jenkins Job Builder') { 
+            definition { 
+              cpsScm { 
+                scm { 
+                  git { 
+                    remote { url('git@github.com:tizianatroukens/jenkins-kubernetes.git') } 
+                    branches('master') 
+                    scriptPath('Jenkinsfile')
+                  }
+                }
+              }
+            }
+          }
     unclassified:
       location:
         url: "http://192.168.99.100:32000"

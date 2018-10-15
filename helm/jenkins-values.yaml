@@ -48,6 +48,8 @@ Master:
     - git:3.9.1
     - greenballs:1.15
     - configuration-as-code:1.1
+    - job-dsl:1.70
+    - configuration-as-code-support:1.1
   # Used to approve a list of groovy functions in pipelines used the script-security plugin. Can be viewed under /scriptApproval
   ScriptApproval:
     - "method groovy.json.JsonSlurperClassic parseText java.lang.String"
