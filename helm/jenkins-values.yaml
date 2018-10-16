@@ -35,7 +35,7 @@ Master:
   # Environment Variables
   ContainerEnv:
     - name: CASC_JENKINS_CONFIG
-      value: /var/jenkins_home/casc_configs/..data/jenkins.yaml
+      value: https://raw.githubusercontent.com/tizianatroukens/jenkins-kubernetes/master/helm/jenkins-casc-config.yaml
     - name: JENKINS_URL
       value: http://192.168.99.100:32000
 
@@ -50,6 +50,7 @@ Master:
     - configuration-as-code:1.1
     - job-dsl:1.70
     - configuration-as-code-support:1.1
+  SecretsFilesSecret: ssh-key-secret
   # Used to approve a list of groovy functions in pipelines used the script-security plugin. Can be viewed under /scriptApproval
   ScriptApproval:
     - "method groovy.json.JsonSlurperClassic parseText java.lang.String"
@@ -86,12 +87,12 @@ Persistence:
   AccessMode: ReadWriteOnce
   Size: 20Gi
   volumes:
-    - name: casc-config
-      configMap:
-        name: jenkins-casc-config
+    - name: git-credentials
+      secret: 
+        secretName: ssh-key-secret
   mounts:
-    - mountPath: /var/jenkins_home/casc_configs
-      name: casc-config
+    - name: git-credentials
+      mountPath: /var/jenkins_home/.ssh
       readOnly: true
 
 NetworkPolicy:

@@ -6,7 +6,7 @@ metadata:
 data:
   jenkins.yaml: |
     jenkins:
-      systemMessage: "added job from casc"
+      systemMessage: "reading casc config from raw url"
     jobs:
       - script: >
           pipelineJob('Jenkins Job Builder') { 
