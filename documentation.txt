@@ -35,6 +35,12 @@ $ kubectl create -f minikube/jenkins-namespace.yaml
 $ kubectl get ns
 
 
+create ssh credential for kubernetes
+$ ssh-keygen -t rsa -b 4096 -C "<email address>"
+$ kubectl create secret generic ssh-key-secret --from-file=ssh-privatekey=credentials/id_rsa --from-file=ssh-publickey=credentials/id_rsa.pub
+	# do not forget to add the id_rsa.pub file to the git repository as a deploy key!
+
+
 install / deploy jenkins (using Helm)
 $ helm init												# --upgrade ?
 $ vi helm/jenkins-values.yaml							# see yaml file for content
