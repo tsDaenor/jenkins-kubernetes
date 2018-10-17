@@ -1,27 +1,20 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: jenkins-casc-config
-  namespace: jenkins-project
-data:
-  jenkins.yaml: |
-    jenkins:
-      systemMessage: "reading casc config from raw url"
-    jobs:
-      - script: >
-          pipelineJob('Jenkins Job Builder') { 
-            definition { 
-              cpsScm { 
-                scm { 
-                  git { 
-                    remote { url('git@github.com:tizianatroukens/jenkins-kubernetes.git') } 
-                    branches('master') 
-                    scriptPath('Jenkinsfile')
-                  }
-                }
+jenkins:
+  systemMessage: "reading casc config from raw url"
+jobs:
+  - script: >
+      pipelineJob('Jenkins Job Builder') { 
+        definition { 
+          cpsScm { 
+            scm { 
+              git { 
+                remote { url('git@github.com:tizianatroukens/jenkins-kubernetes.git') } 
+                branches('master') 
+                scriptPath('Jenkinsfile')
               }
             }
           }
-    unclassified:
-      location:
-        url: "http://192.168.99.100:32000"
+        }
+      }
+unclassified:
+  location:
+    url: "http://192.168.99.100:32000"
