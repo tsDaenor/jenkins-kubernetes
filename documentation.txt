@@ -45,7 +45,6 @@ install / deploy jenkins (using Helm)
 $ helm init												# --upgrade ?
 $ vi helm/jenkins-values.yaml							# see yaml file for content
 $ vi helm/jenkins-casc-config.yaml						# see yaml file for content
-$ kubectl create -f helm/jenkins-casc-config.yaml
 $ helm install --name jenkins -f helm/jenkins-values.yaml stable/jenkins --namespace jenkins-project
 	# make sure to edit the "AdminPassword" field
 	# in this file, define plugins to be pre-installed: including kubernetes, greenballs, git, configuration-as-code plugin
@@ -53,8 +52,11 @@ $ helm ls
 
 
 deploy changes in configuration
-$ kubectl apply -f helm/jenkins-casc-config.yaml
 $ helm upgrade -f helm/jenkins-values.yaml jenkins stable/jenkins
+$ kubectl delete pod --namespace jenkins-project jenkins-69b56d945b-bz7vd				# check minikube dashboard to get the name of the jenkins pod
+
+
+delete and pure helm installation (only in case of issues...)
 $ helm delete jenkins
 $ helm del --purge jenkins
 
@@ -62,7 +64,8 @@ $ helm del --purge jenkins
 check services
 $ minikube service list
 $ minikube service jenkins --namespace jenkins-project
-# kubectl --namespace=jenkins-project exec -it jenkins-69b56d945b-bz7vd -- bash			# check minikube dashboard to get the name of the jenkins pod
+$ kubectl --namespace=jenkins-project exec -it jenkins-69b56d945b-bz7vd -- bash			# check minikube dashboard to get the name of the jenkins pod
+$ kubectl --namespace=jenkins-project logs jenkins-69b56d945b-bz7vd						# check minikube dashboard to get the name of the jenkins pod
 
 
 stop (and delete!) minikube
