@@ -39,6 +39,7 @@ install / deploy jenkins (using Helm)
 $ helm init												# --upgrade ?
 $ vi helm/jenkins-values.yaml							# see yaml file for content
 $ vi helm/jenkins-casc-config.yaml						# see yaml file for content, upload to github for using the raw url
+$ vi helm/jenkins-jjb-config.yaml						# see yaml file for content
 $ helm install --name jenkins -f helm/jenkins-values.yaml stable/jenkins --namespace jenkins-project -w
 	# make sure to edit the "AdminPassword" field
 	# in this file, define plugins to be pre-installed: including kubernetes, greenballs, git, configuration-as-code plugin

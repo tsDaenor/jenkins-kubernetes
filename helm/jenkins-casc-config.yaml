@@ -9,7 +9,7 @@ jobs:
               git { 
                 remote { url('git://github.com/tizianatroukens/jenkins-kubernetes.git') } 
                 branches('master') 
-                scriptPath('Jenkinsfile')
+                scriptPath('jenkins-job-builder/Jenkinsfile')
               }
             }
           }
