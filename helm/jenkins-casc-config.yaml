@@ -7,11 +7,7 @@ jobs:
           cpsScm { 
             scm { 
               git { 
-                remote { 
-                  name('GitHub-Kubernetes')
-                  url('git@github.com:tizianatroukens/jenkins-kubernetes.git')
-                  credentials('ssh_github')
-                } 
+                remote { url('git://github.com/tizianatroukens/jenkins-kubernetes.git') } 
                 branches('master') 
                 scriptPath('Jenkinsfile')
               }
@@ -22,15 +18,3 @@ jobs:
 unclassified:
   location:
     url: ${JENKINS_URL}
-credentials:
-  system:
-    domainCredentials:
-      - credentials:
-          - basicSSHUserPrivateKey:
-              scope: SYSTEM
-              id: ssh_github
-              username: git
-              description: "SSH key for GitHub"
-              privateKeySource:
-                directEntry:
-                  privateKey: ${SSH_PRIVATE_KEY}

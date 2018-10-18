@@ -86,13 +86,6 @@ Persistence:
   Annotations: {}
   AccessMode: ReadWriteOnce
   Size: 20Gi
-  volumes:
-    - name: git-credentials
-      secret: 
-        secretName: ssh-key-secret
-  mounts:
-    - mountPath: /var/jenkins_home/.ssh
-      name: git-credentials
 
 NetworkPolicy:
   # Enable creation of NetworkPolicy resources.
