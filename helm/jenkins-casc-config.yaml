@@ -18,3 +18,13 @@ jobs:
 unclassified:
   location:
     url: "http://192.168.99.100:32000"
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - certificate:
+              scope: SYSTEM
+              id: ssh_private_key
+              keyStoreSource:
+                fileOnMaster:
+                  keyStoreFile: /var/jenkins_home/.ssh/id_rsa

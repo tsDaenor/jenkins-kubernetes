@@ -37,15 +37,15 @@ $ kubectl get ns
 
 create ssh credential for kubernetes
 $ ssh-keygen -t rsa -b 4096 -C "<email address>"
-$ kubectl create secret generic ssh-key-secret --from-file=ssh-privatekey=credentials/id_rsa --from-file=ssh-publickey=credentials/id_rsa.pub
+$ kubectl create secret generic ssh-key-secret --from-file=ssh-privatekey=credentials/id_rsa --from-file=ssh-publickey=credentials/id_rsa.pub --namespace=jenkins-project
 	# do not forget to add the id_rsa.pub file to the git repository as a deploy key!
 
 
 install / deploy jenkins (using Helm)
 $ helm init												# --upgrade ?
 $ vi helm/jenkins-values.yaml							# see yaml file for content
-$ vi helm/jenkins-casc-config.yaml						# see yaml file for content
-$ helm install --name jenkins -f helm/jenkins-values.yaml stable/jenkins --namespace jenkins-project
+$ vi helm/jenkins-casc-config.yaml						# see yaml file for content, upload to github for using the raw url
+$ helm install --name jenkins -f helm/jenkins-values.yaml stable/jenkins --namespace jenkins-project -w
 	# make sure to edit the "AdminPassword" field
 	# in this file, define plugins to be pre-installed: including kubernetes, greenballs, git, configuration-as-code plugin
 $ helm ls
@@ -56,7 +56,7 @@ $ helm upgrade -f helm/jenkins-values.yaml jenkins stable/jenkins
 $ kubectl delete pod --namespace jenkins-project jenkins-69b56d945b-bz7vd				# check minikube dashboard to get the name of the jenkins pod
 
 
-delete and pure helm installation (only in case of issues...)
+delete and purge helm installation (only in case of issues...)
 $ helm delete jenkins
 $ helm del --purge jenkins
 
