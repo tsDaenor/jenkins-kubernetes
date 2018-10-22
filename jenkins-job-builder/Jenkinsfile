@@ -29,7 +29,7 @@ pipeline {
     stage('lint it') {
       steps {
         container('python') {
-          sh '/usr/local/bin/yamllint jenkins-job-builder'
+          sh '/usr/local/bin/yamllint jenkins-job-builder/jobs/'
         }
       }
     }
