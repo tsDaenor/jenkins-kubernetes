@@ -41,15 +41,15 @@ Master:
 
   # List of plugins to be install during Jenkins master start
   InstallPlugins:
-    - kubernetes:1.12.9
+    - kubernetes:1.13.0
     - workflow-aggregator:2.6
     - workflow-job:2.26
     - credentials-binding:1.16
     - git:3.9.1
     - greenballs:1.15
-    - configuration-as-code:1.1
+    - configuration-as-code:1.2
     - job-dsl:1.70
-    - configuration-as-code-support:1.1
+    - configuration-as-code-support:1.2
     - role-strategy:latest
   # Used to approve a list of groovy functions in pipelines used the script-security plugin. Can be viewed under /scriptApproval
   ScriptApproval:
@@ -96,11 +96,11 @@ NetworkPolicy:
 
 ## Install Default RBAC roles and bindings
 rbac:
-  install: false
-  serviceAccountName: default
+  install: true
+  serviceAccountName: jenkins-master
   # RBAC api version (currently either v1beta1 or v1alpha1)
   apiVersion: v1beta1
   # Cluster role reference
-  roleRef: cluster-admin
+  roleRef: admin
   # Role kind (RoleBinding or ClusterRoleBinding)
   roleBindingKind: ClusterRoleBinding
