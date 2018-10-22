@@ -29,18 +29,18 @@ pipeline {
     stage('lint it') {
       steps {
         container('python') {
-          sh '/usr/local/bin/yamllint jjb'
+          sh '/usr/local/bin/yamllint jenkins-job-builder'
         }
       }
     }
     stage('Test Jenkins Job Builder Files') {
       steps {
-        sh 'jenkins-jobs test jobs/'
+        sh 'jenkins-jobs test jenkins-job-builder/jobs/'
       }
     }
     stage('Apply Jenkins Job Builder Files') {
       steps {
-          sh 'jenkins-jobs update jobs/'
+          sh 'jenkins-jobs update jenkins-job-builder/jobs/'
       }
     }
   }

@@ -1,0 +1,3 @@
+---
+- job:
+    name: update-casc-config
