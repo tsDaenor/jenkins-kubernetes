@@ -16,7 +16,7 @@ pipeline {
   stages {
     stage ('Checking out') {
       steps {
-        checkoutWithTags()
+        checkout scm
       }
     }
     stage('install yamllint') {
@@ -44,15 +44,4 @@ pipeline {
       }
     }
   }
-}
-
-void checkoutWithTags() {
-  checkout([
-    $class                           : 'GitSCM',
-    branches                         : scm.branches,
-    doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
-    extensions                       : scm.extensions + [[$class: 'CloneOption', noTags: false, reference: '', shallow: false]],
-    submoduleCfg                     : [],
-    userRemoteConfigs                : scm.userRemoteConfigs
-  ])
 }
