@@ -1,5 +1,30 @@
 jenkins:
   systemMessage: "reading casc config from raw url"
+  authorizationStrategy:
+    roleBased:
+      roles:
+        global:
+          - name: "admin"
+            description: "Jenkins administrators"
+            permissions:
+              - "Overall/Administer"
+            assignments:
+              - "admin"
+          - name: "readonly"
+            description: "Read-only users"
+            permissions:
+              - "Overall/Read"
+              - "Job/Read"
+            assignments:
+              - "authenticated"
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "admin1234"
+        - id: "user"
+          password: "user123"
 jobs:
   - script: >
       pipelineJob('Jenkins Job Builder') { 
