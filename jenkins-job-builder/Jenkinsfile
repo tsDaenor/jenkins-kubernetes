@@ -9,7 +9,7 @@ pipeline {
     kubernetes {
       label 'jenkins-job-builder'
       defaultContainer 'jenkins-job-builder'
-      yamlFile './pod.yaml'
+      yamlFile './pod.yml'
     }
   }
 
