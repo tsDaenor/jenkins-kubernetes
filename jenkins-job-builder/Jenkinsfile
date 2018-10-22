@@ -1,0 +1,58 @@
+pipeline {
+  triggers {
+      pollSCM('* * * * *')
+  }
+  options{
+      disableConcurrentBuilds()
+  }
+  agent {
+    kubernetes {
+      label 'jenkins-job-builder'
+      defaultContainer 'jenkins-job-builder'
+      yamlFile './pod.yaml'
+    }
+  }
+
+  stages {
+    stage ('Checking out') {
+      steps {
+        checkoutWithTags()
+      }
+    }
+    stage('install yamllint') {
+      steps {
+        container('python') {
+          sh '/usr/local/bin/pip install yamllint'
+        }
+      }
+    }
+    stage('lint it') {
+      steps {
+        container('python') {
+          sh '/usr/local/bin/yamllint jjb'
+        }
+      }
+    }
+    stage('Test Jenkins Job Builder Files') {
+      steps {
+        sh 'jenkins-jobs test jobs/'
+      }
+    }
+    stage('Apply Jenkins Job Builder Files') {
+      steps {
+          sh 'jenkins-jobs update jobs/'
+      }
+    }
+  }
+}
+
+void checkoutWithTags() {
+  checkout([
+    $class                           : 'GitSCM',
+    branches                         : scm.branches,
+    doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
+    extensions                       : scm.extensions + [[$class: 'CloneOption', noTags: false, reference: '', shallow: false]],
+    submoduleCfg                     : [],
+    userRemoteConfigs                : scm.userRemoteConfigs
+  ])
+}
