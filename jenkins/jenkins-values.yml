@@ -16,7 +16,7 @@ Master:
   Component: "jenkins-master"
   UseSecurity: true
   AdminUser: admin
-  AdminPassword: admin123
+  # AdminPassword: <defaults to random>
   Cpu: "200m"
   Memory: "256Mi"
   ServicePort: 8080
@@ -35,7 +35,7 @@ Master:
   # Environment Variables
   ContainerEnv:
     - name: CASC_JENKINS_CONFIG
-      value: https://raw.githubusercontent.com/tizianatroukens/jenkins-kubernetes/master/helm/jenkins-casc-config.yaml
+      value: https://raw.githubusercontent.com/tizianatroukens/jenkins-kubernetes/master/casc/config.yml
     - name: JENKINS_URL
       value: http://192.168.99.100:32000
 

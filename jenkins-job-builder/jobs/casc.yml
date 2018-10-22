@@ -1,3 +1,17 @@
 ---
 - job:
     name: update-casc-config
+    display-name: "Update Configuration-as-Code configuration"
+    scm:
+      - git:
+          url: git://github.com/tizianatroukens/jenkins-kubernetes.git
+          branches:
+            - origin/master
+    triggers:
+      - pollscm:
+          cron: "* * * * *"
+          enable-concurrent: false
+    builders:
+      - shell: |
+          crumb=`wget -q --auth-no-challenge --user admin --password admin123 --output-document - 'http://192.168.99.100:32000/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
+          curl -X POST "http://192.168.99.100:32000/configuration-as-code/reload" -H $crumb -u admin:admin123

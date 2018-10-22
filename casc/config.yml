@@ -1,5 +1,5 @@
 jenkins:
-  systemMessage: "reading casc config from raw url"
+  systemMessage: "Reloading Configuration from Jenkins on the go!"
   authorizationStrategy:
     roleBased:
       roles:
@@ -22,13 +22,16 @@ jenkins:
       allowsSignup: false
       users:
         - id: "admin"
-          password: "admin1234"
+          password: "admin123"
         - id: "user"
           password: "user123"
 jobs:
   - script: >
       pipelineJob('Jenkins Job Builder') { 
         definition { 
+          triggers {
+            scm('* * * * *')
+          }
           cpsScm { 
             scm { 
               git { 
