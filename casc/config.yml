@@ -1,5 +1,5 @@
 jenkins:
-  systemMessage: "Reloading Configuration from Jenkins on the go!"
+  systemMessage: "Reloading Configuration from Jenkins on the go - during the meeting"
   authorizationStrategy:
     roleBased:
       roles:
