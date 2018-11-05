@@ -13,5 +13,6 @@
           enable-concurrent: false
     builders:
       - shell: |
-          crumb=`wget -q --auth-no-challenge --user admin --password admin123 --output-document - 'http://192.168.99.100:32000/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
+          # crumb=`wget -q --auth-no-challenge --user admin --password admin123 --output-document - 'http://192.168.99.100:32000/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
+          curl --insecure -s -u admin:admin123 'http://192.168.99.100:32000/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)' 2>&1
           curl -X POST "http://192.168.99.100:32000/configuration-as-code/reload" -H $crumb -u admin:admin123
