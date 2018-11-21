@@ -2,13 +2,13 @@
 
 ## GOAL
 
-[OK] minikube
-[OK] edit values file
-[OK] configuration as code plugin ==> admin paswoord erin, creëer een user (zonder admin rechten, moet geen jobs kunnen maken of editeren, mag ze enkel triggeren)
+- [x] minikube
+- [x] edit values file
+- [x] configuration as code plugin ==> admin paswoord erin, creëer een user (zonder admin rechten, moet geen jobs kunnen maken of editeren, mag ze enkel triggeren)
     --> runnen als job, clone uit git en run op git changes
-[OK] jenkins jobbuilder config/container (heeft admin user nodig van hierboven)
-[OK] helm install jenkins
-[OK] run jenkins job builder to create job
+- [x] jenkins jobbuilder config/container (heeft admin user nodig van hierboven)
+- [x] helm install jenkins
+- [x] run jenkins job builder to create job
     --> run dummy job
 
 ## HOWTO
