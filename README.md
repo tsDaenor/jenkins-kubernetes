@@ -68,7 +68,7 @@ $ brew install kubernetes-helm
 $ kubectl get ns
 ```
 
-### Create jenkins namespace and jjb-config configMap in Kubernetes environment
+### Create jenkins namespace in Kubernetes environment
 
 ```bash
 $ mkdir casc
@@ -79,9 +79,6 @@ $ vi jenkins-job-builder/jjb-config.yml
 
 $ kubectl create -f jenkins/jenkins-namespace.yml
 namespace/jenkins-project created
-
-$ kubectl create -f jenkins-job-builder/jjb-config.yml
-configmap/jjb-config created
 ```
 
 ### install / deploy jenkins (using Helm)
